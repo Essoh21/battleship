@@ -16,9 +16,5 @@ const shipMethods = {
         return (this.length === this.numberOfHits) ? true : false;
     }
 }
-const myShip = Ship(2);
-myShip.updateNumberOfHits();
-console.log(myShip.isSunk());
-myShip.updateNumberOfHits();
-console.log(myShip.isSunk());
+
 export default Ship;
