@@ -2,6 +2,7 @@ import Ship from "./Ship.js";
 class GameBoard {
     constructor() { };
     missedShots = [];
+    hitShots = [];
     sunkShipsNumber = 0;
     placeShipAt(Ship, coordinates) {
         Ship.coordinates = coordinates;
@@ -23,6 +24,7 @@ class GameBoard {
             Ships[hitshipIndex].hit();
             if (Ships[hitshipIndex].isSunk()) {
                 this.sunkShipsNumber += 1;
+                this.hitShots.push(JSON.stringify(attack));
             }
         } else {
             this.missedShots.push(JSON.stringify(attack));
