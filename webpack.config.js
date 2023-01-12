@@ -4,10 +4,12 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: {
-        index: './src/index.js',
+        main: './src/index.js',
     },
     output: {
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].[contenthash].bundlle.js',
+        clean: true,
     },
 
     devServer: {
