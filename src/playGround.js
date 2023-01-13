@@ -1,9 +1,6 @@
 import generateAlphabetArr from "./generateAlphabetArr.js";
-import generateIntegersArr from "./generateIntegersArr.js";
 
 const alphabetArr = generateAlphabetArr(true);
-//const numbers = generateIntegersArr(11).slice(1);
-
 const openTable = "<table>";
 const closeTable = "</table>";
 const openTableHead = "<th>";
@@ -14,18 +11,14 @@ const openTableData = "<td>";
 const closeTableData = "</td>";
 
 const createPlayGround = () => {
-    return openTable + createFirstRow() + createLastTenRows + closeTable;
+    return `${openTable} ${createFirstRow()} ${createLastTenRows()} ${closeTable}`;
 }
 
-
-
 const createFirstRow = () => {
-    const firstRowData = '';
+    let firstRowData = '';
     for (let i = 0; i < 10; i += 1) {
         firstRowData +=
-            `${openTableHead}
-        +${alphabetArr[i]}
-        +${closeTableHead}
+            `${openTableHead} ${alphabetArr[i]} ${closeTableHead}
         `;
     }
     return openTableRow + openTableData
@@ -33,18 +26,19 @@ const createFirstRow = () => {
         + firstRowData + closeTableRow;
 }
 
-const createEmptyRow = () => {
-    const rowContent = `${openTableHead} + ${closeTableHead}`;
+const createRowContent = () => {
+    let rowContent = '';
     for (let i = 1; i <= 10; i += 1) {
-        rowContent += `${openTableData}+${closeTableData}`;
+        rowContent += `${openTableData} ${closeTableData}`;
     }
-    return openTableRow + rowContent + closeTableRow;
 
+    return rowContent;
 }
 
 const createLastTenRows = () => {
-    return [...Array(10)].map(() => createEmptyRow())
-        .reduce((prev, cur) => prev + cur, 0)
+    return [...Array(10)].map((el, index) => `${openTableRow}
+    ${openTableHead}${index + 1}${closeTableHead}${createRowContent()}${closeTableRow}`)
+        .reduce((prev, cur) => prev + cur, '')
 }
 
 export default createPlayGround;

@@ -7,3 +7,20 @@
 body {
     background-color: #ddf;
 }
+
+h1 {
+    text-align: center;
+}
+
+td,
+th,
+tr {
+    border: 1px solid black;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-collapse: collapse;
+}
+
+td:first-child {
+    border: none;
+}
