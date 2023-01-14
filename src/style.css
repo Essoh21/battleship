@@ -12,8 +12,14 @@ h1 {
     text-align: center;
 }
 
+.game-fields-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
 td,
-th,
 tr {
     border: 1px solid black;
     width: 1.5rem;
@@ -23,4 +29,17 @@ tr {
 
 td:first-child {
     border: none;
+}
+
+td:hover {
+    background-color: aquamarine;
+}
+
+.user-part,
+.openent-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }

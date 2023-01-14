@@ -1,4 +1,5 @@
 import GameBoard from "./GameBoard.js";
+import Player from "./Player.js";
 import Ship from "./Ship.js";
 
 const myGameBoard = new GameBoard();
@@ -9,6 +10,7 @@ const firstCoordinates = [{ f: 2 }];
 const secondCoordinates = [{ f: 5 }, { f: 6 }];
 const thirdCoordinates = [{ a: 1 }, { b: 1 }, { c: 2 }];
 const missedShots = myGameBoard.missedShots;
+const John = new Player;
 myGameBoard.placeShipAt(oneLengthShip, firstCoordinates);
 myGameBoard.placeShipAt(twoLengthShip, secondCoordinates);
 myGameBoard.placeShipAt(threeLengthShip, thirdCoordinates);
@@ -60,4 +62,22 @@ test('GameBoard report the number of sunk ships', () => {
     expect(threeLengthShip.isSunk()).toBeTruthy();
     expect(twoLengthShip.isSunk()).toBeFalsy();
     expect(myGameBoard.sunkShipsNumber).toBe(2);
+})
+
+test('gameBoard modify indexes', () => {
+    expect(myGameBoard.indexes.length).toBe(100);
+    myGameBoard.indexes.splice(52, 1);
+    expect(myGameBoard.indexes.length).toBe(99)
+})
+
+test('game board generate random coordinates for one length ship', () => {
+    myGameBoard.generateRandomCoordinatesForShip(John.ships[0]);
+    expect(John.ships[1].coordinates).toBe(null);
+    expect(John.ships[0].coordinates == null).toBeFalsy();
+})
+
+test('gameboard generate random coordinates for 3 length ship', () => {
+    myGameBoard.generateRandomCoordinatesForShip(John.ships[7]);
+    expect(John.ships[8].coordinates).toBe(null);
+    expect(John.ships[7].coordinates.length).toBe(3);
 })
