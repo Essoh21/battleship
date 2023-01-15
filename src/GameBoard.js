@@ -17,6 +17,10 @@ class GameBoard {
         Ship.coordinates = coordinates;
     }
 
+    placeShipsAtRandomCoordinates(ships) {
+        ships.forEach((ship) => this.generateRandomCoordinatesForShip(ship));
+    }
+
     getAllCoordinates() {
         const integers = generateIntegersArr(11).slice(1);
         const alphabet = generateAlphabetArr();
@@ -29,6 +33,21 @@ class GameBoard {
             }
         }
         return coordinates;
+    }
+
+    removeAdjacentIndexesOfIndexFromIndexes(index) {
+        const adjacentIndexesOfIndex = [
+            index + 1
+            , index - 1
+            , index + 10
+            , index - 10
+            , index + 9
+            , index - 9
+            , index + 11
+            , index - 11
+        ].filter((el) => el >= 0);
+        adjacentIndexesOfIndex.forEach((index) => this.indexes.splice(index, 1, '')
+        )
     }
 
     areNConsecutiveFromIndexFree(
@@ -59,21 +78,30 @@ class GameBoard {
                     ship
                     , randomInt = Math.floor(Math.random() * 100)
                 );
-            this.indexes.splice(randomInt, 1);
+            this.indexes.splice(randomInt, 1, '');
+            this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
             return;
         }
         if (ship.length === 2) {
             if (this.areNConsecutiveFromIndexFree(2, randomInt)
                 || this.areNConsecutiveFromIndexFree(2, randomInt, true)) {
-                this.areNConsecutiveFromIndexFree(2, randomInt)
-                    ? ship.coordinates = [
+                if (this.areNConsecutiveFromIndexFree(2, randomInt)) {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 1]
-                    ]
-                    : ship.coordinates = [
+                    ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
+                } else {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 10]
                     ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
+                }
             } else {
                 this.generateRandomCoordinatesForShip(
                     ship
@@ -85,17 +113,25 @@ class GameBoard {
         if (ship.length === 3) {
             if (this.areNConsecutiveFromIndexFree(3, randomInt)
                 || this.areNConsecutiveFromIndexFree(3, randomInt, true)) {
-                this.areNConsecutiveFromIndexFree(3, randomInt)
-                    ? ship.coordinates = [
+                if (this.areNConsecutiveFromIndexFree(3, randomInt)) {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 1]
                         , this.allCoordinates[randomInt + 2]
-                    ]
-                    : ship.coordinates = [
+                    ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
+                } else {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 10]
                         , this.allCoordinates[randomInt + 20]
                     ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
+                }
             } else {
                 this.generateRandomCoordinatesForShip(
                     ship
@@ -107,19 +143,27 @@ class GameBoard {
         if (ship.length === 4) {
             if (this.areNConsecutiveFromIndexFree(4, randomInt)
                 || this.areNConsecutiveFromIndexFree(4, randomInt, true)) {
-                this.areNConsecutiveFromIndexFree(4, randomInt)
-                    ? ship.coordinates = [
+                if (this.areNConsecutiveFromIndexFree(4, randomInt)) {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 1]
                         , this.allCoordinates[randomInt + 2]
                         , this.allCoordinates[randomInt + 3]
-                    ]
-                    : ship.coordinates = [
+                    ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 3);
+                } else {
+                    ship.coordinates = [
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 10]
                         , this.allCoordinates[randomInt + 20]
                         , this.allCoordinates[randomInt + 30]
                     ];
+                    this.indexes.splice(randomInt, 1, '');
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 30);
+                }
             } else {
                 this.generateRandomCoordinatesForShip(
                     ship
@@ -130,16 +174,6 @@ class GameBoard {
 
     }
 
-
-    placeShipsAtRandomCoordinates(
-        ships
-        , randomInt = Math.floor(Math.random() * 100)
-    ) {
-        const shipsCoordinates = [];
-        ships.forEach((ship) => {
-
-        })
-    }
     receiveAttack(attack, Ships) {
         const shipsCoordinates = this.getStringifyedCoordinatesOf(Ships);
         let attackHit = false;

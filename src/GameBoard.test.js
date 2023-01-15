@@ -10,7 +10,7 @@ const firstCoordinates = [{ f: 2 }];
 const secondCoordinates = [{ f: 5 }, { f: 6 }];
 const thirdCoordinates = [{ a: 1 }, { b: 1 }, { c: 2 }];
 const missedShots = myGameBoard.missedShots;
-const John = new Player;
+const John = new Player();
 myGameBoard.placeShipAt(oneLengthShip, firstCoordinates);
 myGameBoard.placeShipAt(twoLengthShip, secondCoordinates);
 myGameBoard.placeShipAt(threeLengthShip, thirdCoordinates);
@@ -80,4 +80,14 @@ test('gameboard generate random coordinates for 3 length ship', () => {
     myGameBoard.generateRandomCoordinatesForShip(John.ships[7]);
     expect(John.ships[8].coordinates).toBe(null);
     expect(John.ships[7].coordinates.length).toBe(3);
+})
+
+test('gameBoard place ships at random coordinates', () => {
+    myGameBoard.placeShipsAtRandomCoordinates(John.ships);
+    expect(John.ships[0].coordinates == null).toBeFalsy();
+    expect(John.ships[1].coordinates == null).toBeFalsy();
+    expect(John.ships[9].coordinates.length).toBe(4);
+    expect(John.ships[4].coordinates.length).toBe(2);
+    expect(John.ships[7].coordinates.length).toBe(3);
+
 })
