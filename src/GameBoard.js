@@ -67,6 +67,9 @@ class GameBoard {
         return result;
     }
 
+    isValideNShipIndex(n, index) {
+        return (index % 10) <= (10 - n) ? true : false;
+    }
     generateRandomCoordinatesForShip(
         ship,
         randomInt = Math.floor(Math.random() * 100)
@@ -83,8 +86,9 @@ class GameBoard {
             return;
         }
         if (ship.length === 2) {
-            if (this.areNConsecutiveFromIndexFree(2, randomInt)
-                || this.areNConsecutiveFromIndexFree(2, randomInt, true)) {
+            if ((this.areNConsecutiveFromIndexFree(2, randomInt)
+                || this.areNConsecutiveFromIndexFree(2, randomInt, true))
+                && this.isValideNShipIndex(2, randomInt)) {
                 if (this.areNConsecutiveFromIndexFree(2, randomInt)) {
                     ship.coordinates = [
                         this.allCoordinates[randomInt]
@@ -111,8 +115,9 @@ class GameBoard {
         }
 
         if (ship.length === 3) {
-            if (this.areNConsecutiveFromIndexFree(3, randomInt)
-                || this.areNConsecutiveFromIndexFree(3, randomInt, true)) {
+            if ((this.areNConsecutiveFromIndexFree(3, randomInt)
+                || this.areNConsecutiveFromIndexFree(3, randomInt, true))
+                && this.isValideNShipIndex(3, randomInt)) {
                 if (this.areNConsecutiveFromIndexFree(3, randomInt)) {
                     ship.coordinates = [
                         this.allCoordinates[randomInt]
@@ -141,8 +146,9 @@ class GameBoard {
         }
 
         if (ship.length === 4) {
-            if (this.areNConsecutiveFromIndexFree(4, randomInt)
-                || this.areNConsecutiveFromIndexFree(4, randomInt, true)) {
+            if ((this.areNConsecutiveFromIndexFree(4, randomInt)
+                || this.areNConsecutiveFromIndexFree(4, randomInt, true))
+                && this.isValideNShipIndex(4, randomInt)) {
                 if (this.areNConsecutiveFromIndexFree(4, randomInt)) {
                     ship.coordinates = [
                         this.allCoordinates[randomInt]
