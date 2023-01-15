@@ -3,6 +3,7 @@ import html from './index.html';
 import GameBoard from './GameBoard.js';
 import createPlayGround from './createPlayGround.js';
 import Player from './Player.js';
+import addClassNameToAll from './DOMInteraction.js';
 
 const playerUI = document
     .querySelector('.user-gameboard-container');
@@ -18,6 +19,10 @@ const openentGameboard = new GameBoard();
 const openentShips = openent.ships;
 
 let currentPlayer = 'player';
+let data;
+
+window.addEventListener('load', addClassNameToAll)
+playerUI.addEventListener('click', (el) => console.log(el.target.className))
 
 playerUI.innerHTML = createPlayGround();
 openentUI.innerHTML = createPlayGround();
