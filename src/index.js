@@ -24,7 +24,7 @@ openentGameboard.placeShipsAtRandomCoordinates(openentShips);
 
 
 window.addEventListener('load', addClassNameToAll)
-playerUI.addEventListener('click', (el) => attackOpenentAt(el))
+openentUI.addEventListener('click', (el) => attackOpenentAt(el))
 
 playerUI.innerHTML = createPlayGround();
 openentUI.innerHTML = createPlayGround();
@@ -33,8 +33,8 @@ openentUI.innerHTML = createPlayGround();
 const attackOpenentAt = (el) => {
     if ((typeof (el.target.className * 1) === 'number')
         && (el.target.className * 1) !== 0) {
-        const attackIndex = (el.target.className * 1) - 1;
-        const attackCoodinates = playerGameboard.allCoordinates[attackIndex];
+        const attackIndex = (el.target.className * 1) - 102;
+        const attackCoodinates = openentGameboard.allCoordinates[attackIndex];
         console.log(attackCoodinates);
     }
 }
