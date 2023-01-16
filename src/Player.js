@@ -4,7 +4,7 @@ import GameBoard from "./GameBoard.js";
 class Player {
     constructor() {
         this.ships = this.buildShips();
-        this.gameBoard = new GameBoard;
+        this.gameBoard = new GameBoard();
     }
 
     buildShips() {

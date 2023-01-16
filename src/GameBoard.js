@@ -25,8 +25,8 @@ class GameBoard {
         const integers = generateIntegersArr(11).slice(1);
         const alphabet = generateAlphabetArr();
         const coordinates = [];
-        for (let i = 0; i < 10; i += 1) {
-            for (let j = 0; j < 10; j += 1) {
+        for (let j = 0; j < 10; j += 1) {
+            for (let i = 0; i < 10; i += 1) {
                 const coordinate = {};
                 coordinate[alphabet[i]] = integers[j];
                 coordinates.push(coordinate);
