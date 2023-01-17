@@ -84,10 +84,42 @@ test('gameboard generate random coordinates for 3 length ship', () => {
 
 test('gameBoard place ships at random coordinates', () => {
     myGameBoard.placeShipsAtRandomCoordinates(John.ships);
+
     expect(John.ships[0].coordinates == null).toBeFalsy();
     expect(John.ships[1].coordinates == null).toBeFalsy();
     expect(John.ships[9].coordinates.length).toBe(4);
     expect(John.ships[4].coordinates.length).toBe(2);
     expect(John.ships[7].coordinates.length).toBe(3);
 
+})
+
+test('gameboard correctly save missed attacks and hitsAttacks', () => {
+    const JohnShips = John.ships;
+    const JohnGameboard = John.gameBoard;
+    JohnGameboard.placeShipsAtRandomCoordinates(JohnShips);
+    const JohnONeLengthCoord = JohnShips[0].coordinates;
+    const twoLengthShipCoor = JohnShips[5].coordinates;
+    const threeLengthShipCoor = JohnShips[8].coordinates;
+    const fourLengthShipCoor = JohnShips[9].coordinates;
+    const randomCoord = JohnGameboard.allCoordinates[Math.floor(Math.random() * 100)];
+    JohnGameboard.receiveAttack(randomCoord, JohnShips);
+    JohnGameboard.receiveAttack(JohnONeLengthCoord[0], JohnShips);
+    JohnGameboard.receiveAttack(twoLengthShipCoor[1], JohnShips);
+    JohnGameboard.receiveAttack(threeLengthShipCoor[2], JohnShips);
+    JohnGameboard.receiveAttack(fourLengthShipCoor[1], JohnShips);
+
+    expect(JohnGameboard.missedShots.includes(JSON.stringify(randomCoord))
+        || JohnGameboard.hitShots.includes(JSON.stringify(randomCoord))).toBeTruthy();
+
+    expect(JohnGameboard.missedShots.includes(JSON.stringify(JohnONeLengthCoord[0]))
+        || JohnGameboard.hitShots.includes(JSON.stringify(JohnONeLengthCoord[0]))).toBeTruthy();
+
+    expect(JohnGameboard.missedShots.includes(JSON.stringify(twoLengthShipCoor[1]))
+        || JohnGameboard.hitShots.includes(JSON.stringify(twoLengthShipCoor[1]))).toBeTruthy();
+
+    expect(JohnGameboard.missedShots.includes(JSON.stringify(threeLengthShipCoor[2]))
+        || JohnGameboard.hitShots.includes(JSON.stringify(threeLengthShipCoor[2]))).toBeTruthy();
+
+    expect(JohnGameboard.missedShots.includes(JSON.stringify(fourLengthShipCoor[1]))
+        || JohnGameboard.hitShots.includes(JSON.stringify(fourLengthShipCoor[1]))).toBeTruthy();
 })

@@ -196,8 +196,8 @@ class GameBoard {
             Ships[hitshipIndex].hit();
             if (Ships[hitshipIndex].isSunk()) {
                 this.sunkShipsNumber += 1;
-                this.hitShots.push(JSON.stringify(attack));
             }
+            this.hitShots.push(JSON.stringify(attack));
         } else {
             this.missedShots.push(JSON.stringify(attack));
         }
