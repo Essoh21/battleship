@@ -25,9 +25,12 @@ h1 {
     gap: 2rem;
 }
 
-td,
-tr {
-    border: 1px solid black;
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1.4px solid black;
     width: 1.5rem;
     height: 1.5rem;
     border-collapse: collapse;
@@ -53,12 +56,17 @@ td:first-child {
     background-color: var(--hit-cell-background);
 }
 
+.openent-part .sunk {
+    background-color: var(--hit-cell-background);
+    border: 2px solid red;
+}
+
 td:first-child:hover,
 td:first-child:active {
     background-color: var(--body-background-color);
 }
 
-.td .user-part,
+.user-part,
 .openent-part {
     display: flex;
     flex-direction: column;
