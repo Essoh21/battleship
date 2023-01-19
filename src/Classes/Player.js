@@ -3,7 +3,7 @@ import GameBoard from "../Classes/GameBoard.js";
 
 class Player {
     constructor() {
-        this.ships = this.buildShips().slice().reverse();
+        this.ships = this.buildShips();
         this.gameBoard = new GameBoard();
     }
 
@@ -13,7 +13,7 @@ class Player {
             if (i < 4) { ships.push(Ship(1)) }
             else if (i < 7) { ships.push(Ship(2)) }
             else if (i < 9) { ships.push(Ship(3)) }
-            else { ships.push(Ship(4)) }
+            else { ships.unshift(Ship(4)) }
         }
 
         return ships;
