@@ -3,7 +3,7 @@ import GameBoard from "../Classes/GameBoard.js";
 
 class Player {
     constructor() {
-        this.ships = this.buildShips();
+        this.ships = this.buildShips().slice().reverse();
         this.gameBoard = new GameBoard();
     }
 

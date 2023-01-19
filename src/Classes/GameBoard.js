@@ -35,7 +35,9 @@ class GameBoard {
         return coordinates;
     }
 
-    removeAdjacentIndexesOfIndexFromIndexes(index) {
+    removeAdjacentIndexesOfIndexFromIndexes(index
+        , indexesContainer = this.indexes
+    ) {
         const adjacentIndexesOfIndex = [
             index + 1
             , index - 1
@@ -47,10 +49,8 @@ class GameBoard {
             , index - 11
         ].filter((el) => el >= 0);
         adjacentIndexesOfIndex.forEach((index) => {
-            const ind = this.indexes.indexOf(index);
-            !(ind === -1)
-                ? this.indexes.splice(ind, 1, '')
-                : console.log('wrong index');
+            const ind = indexesContainer.indexOf(index);
+            if (!(ind === -1)) { indexesContainer.splice(ind, 1, '') }
         }
         )
     }
@@ -80,115 +80,99 @@ class GameBoard {
         randomInt = Math.floor(Math.random() * 100)
     ) {
         if (ship.length === 1) {
-            (this.indexes.includes(randomInt)) ?
-                ship.coordinates = [this.allCoordinates[randomInt]] :
-                this.generateRandomCoordinatesForShip(
-                    ship
-                    , randomInt = Math.floor(Math.random() * 100)
-                );
-            const randIntInd = this.indexes.indexOf(randomInt);
-            this.indexes.splice(randIntInd, 1, '');
-            console.log(randomInt);
-            console.log(this.indexes)
-            console.log(randIntInd);
+            while (!this.indexes.includes(randomInt)) {
+                randomInt = Math.floor(Math.random() * 10);
+            }
+            ship.coordinates = [this.allCoordinates[randomInt]];
+            this.indexes.splice(randomInt, 1, '');
             this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
             return;
         }
         if (ship.length === 2) {
-            if ((this.areNConsecutiveFromIndexFree(2, randomInt)
+            while (!((this.areNConsecutiveFromIndexFree(2, randomInt)
                 || this.areNConsecutiveFromIndexFree(2, randomInt, true))
-                && this.isValideNShipIndex(2, randomInt)) {
-                if (this.areNConsecutiveFromIndexFree(2, randomInt)) {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 1]
-                    ];
-                    const randIntInd = this.indexes.indexOf(randomInt);
-                    this.indexes.splice(randIntInd, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
-                } else {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 10]
-                    ];
-                    const randIntInd = this.indexes.indexOf(randomInt);
-                    this.indexes.splice(randIntInd, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
-                }
-            } else {
-                this.generateRandomCoordinatesForShip(
-                    ship
-                    , randomInt = Math.floor(Math.random() * 100)
-                );
+                && this.isValideNShipIndex(2, randomInt))) {
+                randomInt = Math.floor(Math.random() * 100);
             }
+
+            if (this.areNConsecutiveFromIndexFree(2, randomInt)) {
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 1]
+                ];
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
+            } else {
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 10]
+                ];
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
+            }
+
         }
 
         if (ship.length === 3) {
-            if ((this.areNConsecutiveFromIndexFree(3, randomInt)
+            while (!((this.areNConsecutiveFromIndexFree(3, randomInt)
                 || this.areNConsecutiveFromIndexFree(3, randomInt, true))
-                && this.isValideNShipIndex(3, randomInt)) {
-                if (this.areNConsecutiveFromIndexFree(3, randomInt)) {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 1]
-                        , this.allCoordinates[randomInt + 2]
-                    ];
-                    const randIntInd = this.indexes.indexOf(randomInt);
-                    this.indexes.splice(randIntInd, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
-                } else {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 10]
-                        , this.allCoordinates[randomInt + 20]
-                    ];
-                    const randIntInd = this.indexes.indexOf(randomInt);
-                    this.indexes.splice(randIntInd, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
-                }
-            } else {
-                this.generateRandomCoordinatesForShip(
-                    ship
-                    , randomInt = Math.floor(Math.random() * 100)
-                );
+                && this.isValideNShipIndex(3, randomInt))) {
+                randomInt = Math.floor(Math.random() * 100);
             }
+
+            if (this.areNConsecutiveFromIndexFree(3, randomInt)) {
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 1]
+                    , this.allCoordinates[randomInt + 2]
+                ];
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
+            } else {
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 10]
+                    , this.allCoordinates[randomInt + 20]
+                ];
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
+            }
+
         }
 
         if (ship.length === 4) {
-            if ((this.areNConsecutiveFromIndexFree(4, randomInt)
+            while (!((this.areNConsecutiveFromIndexFree(4, randomInt)
                 || this.areNConsecutiveFromIndexFree(4, randomInt, true))
-                && this.isValideNShipIndex(4, randomInt)) {
-                if (this.areNConsecutiveFromIndexFree(4, randomInt)) {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 1]
-                        , this.allCoordinates[randomInt + 2]
-                        , this.allCoordinates[randomInt + 3]
-                    ];
-                    const randIntInd = this.indexes.indexOf(randomInt);
-                    this.indexes.splice(randIntInd, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 3);
-                } else {
-                    ship.coordinates = [
-                        this.allCoordinates[randomInt]
-                        , this.allCoordinates[randomInt + 10]
-                        , this.allCoordinates[randomInt + 20]
-                        , this.allCoordinates[randomInt + 30]
-                    ];
-                    this.indexes.splice(randomInt, 1, '');
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
-                    this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 30);
-                }
+                && this.isValideNShipIndex(4, randomInt))) {
+                randomInt = Math.floor(Math.random() * 100);
+            }
+
+            if (this.areNConsecutiveFromIndexFree(4, randomInt)) {
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 1]
+                    , this.allCoordinates[randomInt + 2]
+                    , this.allCoordinates[randomInt + 3]
+                ];
+                console.log(this.indexes)
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 3);
+                console.log(this.indexes)
             } else {
-                this.generateRandomCoordinatesForShip(
-                    ship
-                    , randomInt = Math.floor(Math.random() * 100)
-                );
+                ship.coordinates = [
+                    this.allCoordinates[randomInt]
+                    , this.allCoordinates[randomInt + 10]
+                    , this.allCoordinates[randomInt + 20]
+                    , this.allCoordinates[randomInt + 30]
+                ];
+                this.indexes.splice(randomInt, 1, '');
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 30);
             }
         }
 
