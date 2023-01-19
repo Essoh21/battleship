@@ -1,6 +1,6 @@
-import Ship from "./Ship.js";
-import generateAlphabetArr from "./generateAlphabetArr.js";
-import generateIntegersArr from "./generateIntegersArr.js";
+
+import generateAlphabetArr from "../helpfullFunctions/generateAlphabetArr.js";
+import generateIntegersArr from "../helpfullFunctions/generateIntegersArr.js";
 class GameBoard {
     constructor() {
         this.missedShots = [];
@@ -46,7 +46,12 @@ class GameBoard {
             , index + 11
             , index - 11
         ].filter((el) => el >= 0);
-        adjacentIndexesOfIndex.forEach((index) => this.indexes.splice(index, 1, '')
+        adjacentIndexesOfIndex.forEach((index) => {
+            const ind = this.indexes.indexOf(index);
+            !(ind === -1)
+                ? this.indexes.splice(ind, 1, '')
+                : console.log('wrong index');
+        }
         )
     }
 
@@ -81,7 +86,11 @@ class GameBoard {
                     ship
                     , randomInt = Math.floor(Math.random() * 100)
                 );
-            this.indexes.splice(randomInt, 1, '');
+            const randIntInd = this.indexes.indexOf(randomInt);
+            this.indexes.splice(randIntInd, 1, '');
+            console.log(randomInt);
+            console.log(this.indexes)
+            console.log(randIntInd);
             this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
             return;
         }
@@ -94,7 +103,8 @@ class GameBoard {
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 1]
                     ];
-                    this.indexes.splice(randomInt, 1, '');
+                    const randIntInd = this.indexes.indexOf(randomInt);
+                    this.indexes.splice(randIntInd, 1, '');
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
                 } else {
@@ -102,7 +112,8 @@ class GameBoard {
                         this.allCoordinates[randomInt]
                         , this.allCoordinates[randomInt + 10]
                     ];
-                    this.indexes.splice(randomInt, 1, '');
+                    const randIntInd = this.indexes.indexOf(randomInt);
+                    this.indexes.splice(randIntInd, 1, '');
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
                 }
@@ -124,7 +135,8 @@ class GameBoard {
                         , this.allCoordinates[randomInt + 1]
                         , this.allCoordinates[randomInt + 2]
                     ];
-                    this.indexes.splice(randomInt, 1, '');
+                    const randIntInd = this.indexes.indexOf(randomInt);
+                    this.indexes.splice(randIntInd, 1, '');
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
                 } else {
@@ -133,7 +145,8 @@ class GameBoard {
                         , this.allCoordinates[randomInt + 10]
                         , this.allCoordinates[randomInt + 20]
                     ];
-                    this.indexes.splice(randomInt, 1, '');
+                    const randIntInd = this.indexes.indexOf(randomInt);
+                    this.indexes.splice(randIntInd, 1, '');
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
                 }
@@ -156,7 +169,8 @@ class GameBoard {
                         , this.allCoordinates[randomInt + 2]
                         , this.allCoordinates[randomInt + 3]
                     ];
-                    this.indexes.splice(randomInt, 1, '');
+                    const randIntInd = this.indexes.indexOf(randomInt);
+                    this.indexes.splice(randIntInd, 1, '');
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                     this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 3);
                 } else {

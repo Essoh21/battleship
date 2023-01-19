@@ -1,6 +1,6 @@
-import GameBoard from "./GameBoard.js";
-import Player from "./Player.js";
-import Ship from "./Ship.js";
+import GameBoard from "../Classes/GameBoard";
+import Player from "../Classes/Player";
+import Ship from "../Classes/Ship";
 
 const myGameBoard = new GameBoard();
 const twoLengthShip = Ship(2);

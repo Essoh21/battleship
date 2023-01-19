@@ -1,6 +1,6 @@
-import createPlayGround from './createPlayGround.js';
-import Player from './Player.js';
-import addClassNameToAll from './DOMInteraction.js';
+import createPlayGround from '../helpfullFunctions/createPlayGround.js';
+import Player from '../Classes/Player.js';
+import addClassNameToAll from '../helpfullFunctions/DOMInteraction.js';
 
 const addEvents = () => {
     const playerUI = document
@@ -25,7 +25,6 @@ const addEvents = () => {
     openentUI.addEventListener('click', (el) => attackOpenentAt(el))
     playerUI.innerHTML = createPlayGround();
     openentUI.innerHTML = createPlayGround();
-
 
     const attackOpenentAt = (el) => {
         if ((typeof (el.target.className * 1) === 'number')
@@ -53,7 +52,6 @@ const displayShip = (ship, gameboard) => {
         const indexFromAllCoor = gameboardAllcoords.indexOf(
             coor
         );
-        console.log(coor);
         shipCoorIndexes.push(indexFromAllCoor);
     });
     const squares = document.querySelectorAll('td');

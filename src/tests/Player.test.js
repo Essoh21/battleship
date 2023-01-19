@@ -1,4 +1,4 @@
-import Player from "./Player.js";
+import Player from "../Classes/Player";
 
 const John = new Player()
 const attackCoordinates = { b: 0 };

@@ -1,5 +1,5 @@
-import style from './style.css';
-import html from './index.html';
-import addEvents from './addEvents.js';
+import style from './style/style.css';
+import html from './html/index.html';
+import addEvents from './Events/addEvents.js';
 
 addEvents();

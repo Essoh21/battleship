@@ -1,5 +1,5 @@
-import Ship from "./Ship.js";
-import GameBoard from "./GameBoard.js";
+import Ship from "../Classes/Ship.js";
+import GameBoard from "../Classes/GameBoard.js";
 
 class Player {
     constructor() {
