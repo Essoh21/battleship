@@ -38,19 +38,51 @@ class GameBoard {
     removeAdjacentIndexesOfIndexFromIndexes(index
         , indexesContainer = this.indexes
     ) {
-        const adjacentIndexesOfIndex = [
-            index + 1
-            , index - 1
-            , index + 10
-            , index - 10
-            , index + 9
-            , index - 9
-            , index + 11
-            , index - 11
-        ].filter((el) => el >= 0);
+        let adjacentIndexesOfIndex;
+        if ((index % 10) == 9) {
+            adjacentIndexesOfIndex = [
+                index - 1
+                , index + 10
+                , index - 10
+                , index + 9
+                , index - 11].filter((el) => el >= 0);
+        } else if ((index % 10) == 0) {
+            adjacentIndexesOfIndex = [
+                index + 1
+                , index + 10
+                , index - 10
+                , index - 9
+                , index + 11].filter((el) => el >= 0);
+        } else if ((index > 0) && (index < 9)) {
+            adjacentIndexesOfIndex = [
+                index - 1
+                , index + 1
+                , index + 10
+                , index + 9
+                , index + 11].filter((el) => el >= 0);
+        } else if ((index > 90) && (index < 99)) {
+            adjacentIndexesOfIndex = [
+                index - 1
+                , index + 1
+                , index - 10
+                , index - 9
+                , index - 11].filter((el) => el >= 0);
+        } else {
+            adjacentIndexesOfIndex = [
+                index + 1
+                , index - 1
+                , index + 10
+                , index - 10
+                , index + 9
+                , index - 9
+                , index + 11
+                , index - 11
+            ].filter((el) => el >= 0);
+        }
         adjacentIndexesOfIndex.forEach((index) => {
-            const ind = indexesContainer.indexOf(index);
-            if (!(ind === -1)) { indexesContainer.splice(ind, 1, '') }
+            if (indexesContainer.includes(index)) {
+                indexesContainer.splice(index, 1, '');
+            }
         }
         )
     }
@@ -86,6 +118,7 @@ class GameBoard {
             ship.coordinates = [this.allCoordinates[randomInt]];
             this.indexes.splice(randomInt, 1, '');
             this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+            console.log(this.indexes.length);
             return;
         }
         if (ship.length === 2) {
@@ -103,6 +136,7 @@ class GameBoard {
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
+                console.log(this.indexes.length);
             } else {
                 ship.coordinates = [
                     this.allCoordinates[randomInt]
@@ -111,6 +145,7 @@ class GameBoard {
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
+                console.log(this.indexes.length);
             }
 
         }
@@ -122,7 +157,7 @@ class GameBoard {
                 randomInt = Math.floor(Math.random() * 100);
             }
 
-            if (this.areNConsecutiveFromIndexFree(3, randomInt)) {
+            if (!this.areNConsecutiveFromIndexFree(3, randomInt)) {
                 ship.coordinates = [
                     this.allCoordinates[randomInt]
                     , this.allCoordinates[randomInt + 1]
@@ -130,7 +165,9 @@ class GameBoard {
                 ];
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
+                console.log(this.indexes.length);
             } else {
                 ship.coordinates = [
                     this.allCoordinates[randomInt]
@@ -139,7 +176,9 @@ class GameBoard {
                 ];
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
+                console.log(this.indexes.length);
             }
 
         }
@@ -161,6 +200,8 @@ class GameBoard {
                 console.log(this.indexes)
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 1);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 2);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 3);
                 console.log(this.indexes)
             } else {
@@ -172,6 +213,8 @@ class GameBoard {
                 ];
                 this.indexes.splice(randomInt, 1, '');
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 10);
+                this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 20);
                 this.removeAdjacentIndexesOfIndexFromIndexes(randomInt + 30);
             }
         }

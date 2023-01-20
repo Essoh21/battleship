@@ -21,8 +21,8 @@ const createFirstRow = () => {
             `${openTableHead} ${alphabetArr[i]} ${closeTableHead}
         `;
     }
-    return openTableRow + openTableData
-        + closeTableData
+    return openTableRow + openTableHead
+        + closeTableHead
         + firstRowData + closeTableRow;
 }
 

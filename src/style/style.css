@@ -40,10 +40,6 @@ td {
     background-color: aquamarine;
 }
 
-td:first-child {
-    border: none;
-}
-
 .openent-part td:active {
     background-color: var(--body-background-color);
 }

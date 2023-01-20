@@ -43,19 +43,19 @@ const displayAllShips = (ships, gameboard) => {
 }
 
 const displayShip = (ship, gameboard) => {
-    const shipCoorIndexes = []
+    const shipCoorIndexes = [];
     const shipCoordinates = ship.coordinates.map((coor) => JSON.stringify(coor));
+    const gameboardAllcoords = gameboard.allCoordinates.map(
+        (coords) =>
+            JSON.stringify(coords));
     shipCoordinates.forEach((coor) => {
-        const gameboardAllcoords = gameboard.allCoordinates.map(
-            (coords) =>
-                JSON.stringify(coords));
         const indexFromAllCoor = gameboardAllcoords.indexOf(
             coor
         );
         shipCoorIndexes.push(indexFromAllCoor);
     });
     const squares = document.querySelectorAll('td');
-    shipCoorIndexes.forEach((ind) => squares[ind + 1]
+    shipCoorIndexes.forEach((ind) => squares[ind]
         .style.border = '2px solid blue');
 }
 
