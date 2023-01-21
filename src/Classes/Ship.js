@@ -3,6 +3,7 @@ const Ship = (Shiplength) => {
     ship.numberOfHits = 0;
     ship.length = Shiplength;
     ship.coordinates = null;
+    ship.direction = 'horizontal';
     return ship;
 }
 
