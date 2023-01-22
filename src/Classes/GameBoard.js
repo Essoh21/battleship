@@ -11,6 +11,10 @@ class GameBoard {
         ship.coordinates = coordinates;
     }
 
+    areAllShipSun() {
+        return this.sunkShipsNumber === 10 ? true : false;
+    }
+
     placeShipsAtRandomCoordinates(ships) {
         ships.forEach((ship) => ship.coordinates =
             this.getRandomCoordinatesForShip(ship));
@@ -25,6 +29,26 @@ class GameBoard {
         ];
 
         return this.getCoordForShipOfLengthFrom(ship.length, randomFirstCoord, direction);
+    }
+
+    receiveAttack(attackCoords, ships) {
+        let hit = false;
+        for (let i = 0; i < ships.length; i += 1) {
+            if (ships[i].containsCoordinates(attackCoords)) {
+                ships[i].hit();
+                hit = true;
+                this.hitShots.push(attackCoords)
+                if (ships[i].numberOfHits === ships[i].length) {
+                    this.sunkShipsNumber += 1;
+                }
+
+                break;
+            }
+        }
+        if (!hit) {
+            this.missedShots.push(attackCoords);
+        }
+
     }
 
     getCoordForShipOfLengthFrom(length, startCoords, direction) {
