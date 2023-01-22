@@ -6,7 +6,7 @@ test('ship return its length', () => {
 });
 
 test('Ship returns its coordinates', () => {
-    expect(Ship(3).coordinates).toEqual(null);
+    expect(Ship(3).coordinates).toEqual([]);
 })
 
 test('ship update number of hits', () => {

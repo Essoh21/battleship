@@ -16,21 +16,21 @@ class GameBoard {
             this.getRandomCoordinatesForShip(ship));
     }
 
-    getRandomCoordinatesForShip(ship) {
+    getRandomCoordinatesForShip(ship, ships) {
         const direction = this.getRandomDirection();
         const possibleFirstCoordForShip =
-            getPossibleFirstCoordForShipsOfLength(ship.length, direction);
+            this.getPossibleFirstCoordForShipsOfLength(ship.length, direction, ships);
         const randomFirstCoord = possibleFirstCoordForShip[
             this.getRandomIntegerLessThan(possibleFirstCoordForShip.length)
         ];
 
-        return this.getCoordOfShipFrom(ship, randomFirstCoord, direction);
+        return this.getCoordForShipOfLengthFrom(ship.length, randomFirstCoord, direction);
     }
 
-    getCoordOfShipFrom(ship, startCoords, direction) {
+    getCoordForShipOfLengthFrom(length, startCoords, direction) {
         const coordinates = [];
         let i = 0;
-        while (i < ship.length) {
+        while (i < length) {
             direction === 'horizontal'
                 ? coordinates.push({
                     x: startCoords.x
@@ -46,10 +46,72 @@ class GameBoard {
         return coordinates;
     }
 
-    getPossibleFirstCoordForShipsOfLength(length, direction) {
-        const possibleFirstCoordinates = [];
+    getPossibleFirstCoordForShipsOfLength(
+        length
+        , direction
+        , allShips) {
+        const possibleTopLeftCoords = [];
+        for (let y = 0; y < 10; y += 1) {
+            for (let x = 0; x < 10; x += 1) {
+                const possibletopLeftCoord = { x, y };
+                const shipCoordinates = this.getCoordForShipOfLengthFrom(
+                    length, possibletopLeftCoord, direction
+                )
+                if ((!this.isCoordsValid(shipCoordinates))
+                    || (this.isOvalapping(shipCoordinates, allShips))
+                    || this.areAdjacents(shipCoordinates, allShips)) {
+                    continue;
+                }
+
+                possibleTopLeftCoords.push(possibletopLeftCoord);
+            }
+        }
+        return possibleTopLeftCoords;
+    }
+
+    isCoordsValid(coords) {
+        const lastCoord = coords[coords.length - 1];
+        return (lastCoord.x > 9 || lastCoord.y > 9) ? false : true;
+    }
+
+    isOvalapping(coords, allShips) {
+        for (let i = 0; i < coords.length; i += 1) {
+            for (let j = 0; j < allShips.length; j += 1) {
+                for (let k = 0; k < allShips[j].coordinates.length; k += 1) {
+                    if (coords[i].x === allShips[j].coordinates[k].x
+                        && coords[i].y === allShips[j].coordinates[k].y) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    areAdjacents(coords, allShips) {
+        for (let i = 0; i < coords.length; i += 1) {
+            const adjacentsCoords = this.getAdjacentCoords(coords[i]);
+            if (this.isOvalapping(adjacentsCoords, allShips)) {
+                return true;
+            }
+            return false;
+        }
 
     }
+
+    getAdjacentCoords(coord) {
+        return [
+            { x: coord.x, y: coord.y - 1 }
+            , { x: coord.x, y: coord.y + 1 }
+            , { x: coord.x - 1, y: coord.y }
+            , { x: coord.x + 1, y: coord.y }
+            , { x: coord.x - 1, y: coord.y - 1 }
+            , { x: coord.x - 1, y: coord.y + 1 }
+            , { x: coord.x + 1, y: coord.y - 1 }
+            , { x: coord.x + 1, y: coord.y + 1 }
+        ];
+    }
+
     getRandomIntegerLessThan(integer) {
         return Math.floor(Math.random() * integer);
     }
@@ -58,6 +120,7 @@ class GameBoard {
         return (Math.floor(Math.random() * 2) % 2) === 0
             ? 'horizontal' : 'vertical';
     }
+
 
     getAllCoordinates() {
         const coordinates = [];
@@ -68,30 +131,6 @@ class GameBoard {
             }
         }
         return coordinates;
-    }
-
-    receiveAttack(attack, Ships) {
-        const shipsCoordinates = this.getStringifyedCoordinatesOf(Ships);
-        let attackHit = false;
-        let hitshipIndex;
-        shipsCoordinates.forEach((strshipCoordinates, index) => {
-            const shipCoordinates = JSON.parse(strshipCoordinates)
-                .map(keyVal => JSON.stringify(keyVal)); // stringify each pair
-            if (shipCoordinates.includes(JSON.stringify(attack))) {
-                attackHit = true;
-                hitshipIndex = index;
-            }
-        })
-        if (attackHit) {
-            Ships[hitshipIndex].hit();
-            if (Ships[hitshipIndex].isSunk()) {
-                this.sunkShipsNumber += 1;
-            }
-            this.hitShots.push(JSON.stringify(attack));
-        } else {
-            this.missedShots.push(JSON.stringify(attack));
-        }
-
     }
 
 

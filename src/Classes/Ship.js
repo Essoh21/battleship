@@ -2,7 +2,7 @@ const Ship = (Shiplength) => {
     const ship = Object.create(shipMethods);
     ship.numberOfHits = 0;
     ship.length = Shiplength;
-    ship.coordinates = null;
+    ship.coordinates = [];
     ship.direction = 'horizontal';
     return ship;
 }
