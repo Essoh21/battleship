@@ -17,7 +17,7 @@ class GameBoard {
 
     placeShipsAtRandomCoordinates(ships) {
         ships.forEach((ship) => ship.coordinates =
-            this.getRandomCoordinatesForShip(ship));
+            this.getRandomCoordinatesForShip(ship, ships));
     }
 
     getRandomCoordinatesForShip(ship, ships) {

@@ -4,7 +4,7 @@ import GameBoard from "../Classes/GameBoard.js";
 class Player {
     constructor() {
         this.ships = this.buildShips();
-        this.gameBoard = new GameBoard();
+        this.gameboard = new GameBoard();
     }
 
     buildShips() {
@@ -20,7 +20,7 @@ class Player {
     }
 
     attackEnemyAt(enemy, coordinates) {
-        enemy.gameBoard.receiveAttack(coordinates, enemy.ships);
+        enemy.gameboard.receiveAttack(coordinates, enemy.ships);
     }
 
     getMissedShootsFrom(enemyGameBoard) {

@@ -1,22 +1,24 @@
 import Player from "../Classes/Player";
 
-const John = new Player()
-const attackCoordinates = { b: 0 };
+const player = new Player();
 const enemy = new Player();
-enemy.ships.forEach((ship, index) => {
-    if (ship.length === 1) {
-        ship.coordinates = [{ a: index }];
-    } else if (ship.length === 2) {
-        ship.coordinates = [{ c: index }, { d: index }];
-    } else if (ship.length === 3) {
-        ship.coordinates = [{ e: index }, { f: index }, { g: index }];
-    } else {
-        ship.coordinates = [{ e: index }, { f: index }, { g: index }, { a: 0 }];
-    }
+enemy.gameboard.placeShipsAtRandomCoordinates(enemy.ships);
+
+const initializeEnemyBoardMissedAndHitsShots = () => {
+    enemy.gameboard.missedShots = [];
+    enemy.gameboard.hitShots = [];
+}
+
+describe('Player', () => {
+
+    beforeEach(() => {
+        initializeEnemyBoardMissedAndHitsShots();
+    });
+
+    test(`player can attack the enemy gameboard`, () => {
+        player.attackEnemyAt(enemy, { x: 1, y: 1 });
+        expect(enemy.gameboard.missedShots.length === 1
+            || enemy.gameboard.hitShots.length === 1).toBeTruthy()
+    })
 })
-const enemyBoard = enemy.gameBoard;
-John.attackEnemyAt(enemy, attackCoordinates);
-test('Player attacks enemy gameBoard', () => {
-    expect(enemyBoard.missedShots.length)
-        .toBe(1);
-})
+
