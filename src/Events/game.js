@@ -15,7 +15,12 @@ const game = () => {
     opponentGameboard.innerHTML = createPlayGround();
     opponent.gameboard.placeShipsAtRandomCoordinates(opponent.ships);
     //Events
-    window.addEventListener('load', addDataTotd);
+    window.addEventListener('load', () => {
+        addDataTotd();
+        console.log(player.ships)
+        displayShips(player.ships,
+            playerGameboard);
+    });
     opponentGameboard.addEventListener('click', (el) => {
         attackOpponentAtCell(opponent, el);
     })
@@ -30,6 +35,18 @@ const attackOpponentAtCell = (opponent, cell) => {
 
     markcellAsAttacked(cell.target);
 }
+
+function displayShips(ships, gameBoard) {
+    ships.forEach((ship) => {
+        ship.coordinates.forEach(coord => {
+            let x = coord.x;
+            let y = coord.y;
+            let td = gameBoard.querySelector(`td[data-x="${x}"][data-y="${y}"]`);
+            td.classList.add("ship");
+        });
+    });
+}
+
 
 const markcellAsAttacked = (cell) => {
     cell.classList.add('clicked');

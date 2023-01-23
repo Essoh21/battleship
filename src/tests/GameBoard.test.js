@@ -3,15 +3,51 @@ import Ship from "../Classes/Ship";
 import Player from "../Classes/Player";
 
 
+function checkOverlapping(ships) {
+    for (let i = 0; i < ships.length; i++) {
+        for (let j = i + 1; j < ships.length; j++) {
+            for (let k = 0; k < ships[i].coordinates.length; k++) {
+                for (let l = 0; l < ships[j].coordinates.length; l++) {
+                    if (ships[i].coordinates[k].x === ships[j]
+                        .coordinates[l].x && ships[i].coordinates[k]
+                            .y === ships[j].coordinates[l].y) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function checkAdjacent(ships) {
+    for (let i = 0; i < ships.length; i++) {
+        for (let j = i + 1; j < ships.length; j++) {
+            for (let k = 0; k < ships[i].coordinates.length; k++) {
+                for (let l = 0; l < ships[j].coordinates.length; l++) {
+                    if (Math.abs(ships[i].coordinates[k].x - ships[j].coordinates[l].x) <= 1 && Math.abs(ships[i].coordinates[k].y - ships[j].coordinates[l].y) <= 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
 describe('GameBoard', () => {
     test('getRandomCoordinatesForShip returns a set of valid coordinates for a ship', () => {
         const gameBoard = new GameBoard();
         const ship = Ship(3);
         const player = new Player();
         const ships = player.ships;
+        gameBoard.placeShipsAtRandomCoordinates(ships);
 
         const coordinates = gameBoard.getRandomCoordinatesForShip(
             ship, ships);
+
+        expect(checkOverlapping(ships)).toBeFalsy();
+        expect(checkAdjacent(ships)).toBeFalsy()
 
         expect(coordinates).toBeDefined();
         expect(coordinates.length).toBe(3);
@@ -21,6 +57,8 @@ describe('GameBoard', () => {
             expect(coord.x >= 0 && coord.x <= 9).toBeTruthy();
             expect(coord.y >= 0 && coord.y <= 9).toBeTruthy();
         });
+
+
     });
 
     describe('receiveAttack', () => {

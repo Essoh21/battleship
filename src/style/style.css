@@ -57,11 +57,6 @@ td {
     border: 2px solid red;
 }
 
-td:first-child:hover,
-td:first-child:active {
-    background-color: var(--body-background-color);
-}
-
 .user-part,
 .opponent-part {
     display: flex;
@@ -69,4 +64,8 @@ td:first-child:active {
     align-items: center;
     justify-content: center;
     gap: 1rem;
+}
+
+.user-part .ship {
+    border: 3px solid blue;
 }
