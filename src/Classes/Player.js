@@ -23,6 +23,37 @@ class Player {
         enemy.gameboard.receiveAttack(coordinates, enemy.ships);
     }
 
+    attackEnemyAtRandomCoords(enemy) {
+        const possibleAttacks =
+            this.getpossibleAttackCoordsFrom(enemy.gameboard);
+        const randomIndex =
+            Math.floor(Math.random() * possibleAttacks.length);
+        const attackCoords = possibleAttacks[randomIndex];
+        this.attackEnemyAt(enemy, attackCoords);
+
+    }
+
+    getpossibleAttackCoordsFrom(enemyGameboard) {
+        const usedAttacks = [
+            ...enemyGameboard.missedShots
+            , ...enemyGameboard.hitShots
+        ]
+        const futureAttacks =
+            ((enemyGameboard.allCoordinates
+                .map((coords) => {
+                    return JSON.stringify(coords);
+                })).filter((strCor) => {
+                    return !usedAttacks
+                        .map((usedAtt) => {
+                            return JSON.stringify(usedAtt)
+                        }).includes(strCor)
+                })).map((scro) => {
+                    return JSON.parse(scro)
+                })
+        return futureAttacks;
+    }
+
+
     getMissedShootsFrom(enemyGameBoard) {
         return enemyGameBoard.missedShots;
     }

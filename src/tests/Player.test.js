@@ -19,6 +19,16 @@ describe('Player', () => {
         player.attackEnemyAt(enemy, { x: 1, y: 1 });
         expect(enemy.gameboard.missedShots.length === 1
             || enemy.gameboard.hitShots.length === 1).toBeTruthy()
+    });
+
+    test(`player can attack the enemy at a random Attack`, () => {
+        player.attackEnemyAtRandomCoords(enemy);
+        console.log(enemy.gameboard.missedShots);
+        console.log(enemy.gameboard.hitShots);
+        expect(enemy.gameboard.missedShots.length === 1
+            || enemy.gameboard.hitShots.length === 1).toBeTruthy()
+        expect(enemy.gameboard.missedShots.length === 0
+            || enemy.gameboard.hitShots.length === 0).toBeTruthy()
     })
 })
 
