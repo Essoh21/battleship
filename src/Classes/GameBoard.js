@@ -11,7 +11,7 @@ class GameBoard {
         ship.coordinates = coordinates;
     }
 
-    areAllShipSun() {
+    areAllShipsSunk() {
         return this.sunkShipsNumber === 10 ? true : false;
     }
 
@@ -22,6 +22,7 @@ class GameBoard {
 
     getRandomCoordinatesForShip(ship, ships) {
         const direction = this.getRandomDirection();
+        ship.direction = direction;
         const possibleFirstCoordForShip =
             this.getPossibleFirstCoordForShipsOfLength(ship.length, direction, ships);
         const randomFirstCoord = possibleFirstCoordForShip[
@@ -118,8 +119,8 @@ class GameBoard {
             if (this.isOvalapping(adjacentsCoords, allShips)) {
                 return true;
             }
-            return false;
         }
+        return false;
 
     }
 

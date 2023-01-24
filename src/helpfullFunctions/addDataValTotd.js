@@ -1,5 +1,5 @@
-const addDataTotd = () => {
-    const allTd = document.querySelectorAll('td');
+const addDataTotd = (container) => {
+    const allTd = container.querySelectorAll('td');
     allTd.forEach((td, index) => {
         td.dataset.x = `${getXY(index).x}`;
         td.dataset.y = `${getXY(index).y}`;

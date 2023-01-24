@@ -16,24 +16,33 @@ const game = () => {
     opponent.gameboard.placeShipsAtRandomCoordinates(opponent.ships);
     //Events
     window.addEventListener('load', () => {
-        addDataTotd();
-        console.log(player.ships)
+        addDataTotd(playerGameboard);
+        addDataTotd(opponentGameboard);
         displayShips(player.ships,
             playerGameboard);
     });
     opponentGameboard.addEventListener('click', (el) => {
-        attackOpponentAtCell(opponent, el);
+        if (el.target.tagName == 'TD') {
+            attackOpponentAtCell(opponent, el);
+        }
+        displayPlayerSunkShips(opponent, opponentGameboard);
     })
 }
 
 const attackOpponentAtCell = (opponent, cell) => {
     const x = Number(cell.target.dataset.x);
     const y = Number(cell.target.dataset.y);
-    const attackAtCoords = { x, y };
-    opponent.gameboard.receiveAttack(attackAtCoords, opponent.ships);
+    const attackedCoords = { x, y };
+    opponent.gameboard.receiveAttack(attackedCoords, opponent.ships);
+    let hit = false;
+    opponent.ships.forEach((ship) => {
+        if (ship.containsCoordinates(attackedCoords)) {
+            hit = true;
+        }
+    })
+    hit ? markCellAsHit(cell.target) : markcellAsAttacked(cell.target);
 
 
-    markcellAsAttacked(cell.target);
 }
 
 function displayShips(ships, gameBoard) {
@@ -47,8 +56,23 @@ function displayShips(ships, gameBoard) {
     });
 }
 
+function displayPlayerSunkShips(player, gameboard) {
+    player.ships.forEach((ship) => {
+        if (ship.length === ship.numberOfHits) {
+            ship.coordinates.forEach((coord) => {
+                let td = gameboard
+                    .querySelector(`td[data-x= "${coord.x}"][data-y="${coord.y}"]`);
+                td.classList.add('sunk');
+            })
+        }
+    })
+}
 
 const markcellAsAttacked = (cell) => {
     cell.classList.add('clicked');
+}
+
+const markCellAsHit = (cell) => {
+    cell.classList.add('hit');
 }
 export default game;

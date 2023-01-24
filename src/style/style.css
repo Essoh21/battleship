@@ -48,13 +48,12 @@ td {
     background-color: var(--clicked-cell-background-color);
 }
 
-.openent-part .hit {
+.opponent-part .hit {
     background-color: var(--hit-cell-background);
 }
 
 .opponent-part .sunk {
-    background-color: var(--hit-cell-background);
-    border: 2px solid red;
+    border: 3px solid red;
 }
 
 .user-part,
