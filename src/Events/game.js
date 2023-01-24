@@ -9,6 +9,13 @@ const game = () => {
         document.querySelector('.user-gameboard-container');
     const opponentGameboard =
         document.querySelector('.opponent-gameboard-container');
+    const play =
+        document.querySelector('.play');
+    const randomise =
+        document.querySelector('.randomise');
+
+    const restart =
+        document.querySelector('.restart');
     //add user and opponent gameboards
     playerGameboard.innerHTML = createPlayGround();
     player.gameboard.placeShipsAtRandomCoordinates(player.ships);
@@ -21,12 +28,34 @@ const game = () => {
         displayShips(player.ships,
             playerGameboard);
     });
-    opponentGameboard.addEventListener('click', (el) => {
-        if (el.target.tagName == 'TD') {
-            attackOpponentAtCell(opponent, el);
-        }
-        displayPlayerSunkShips(opponent, opponentGameboard);
+
+    restart.addEventListener('click', () => {
+        location.reload();
     })
+    randomise.addEventListener('click', () => {
+        removeShipsOnGameboard(playerGameboard);
+        player.gameboard.placeShipsAtRandomCoordinates(player.ships);
+        displayShips(player.ships, playerGameboard);
+    })
+
+    play.addEventListener('click', () => {
+        opponentGameboard.addEventListener('click', (el) => {
+            if (el.target.tagName == 'TD') {
+                attackOpponentAtCell(opponent, el);
+            }
+            displayPlayerSunkShips(opponent, opponentGameboard);
+            if (opponent.gameboard.areAllShipsSunk()) {
+                opponentGameboard
+                    .replaceWith(opponentGameboard.cloneNode(true))
+                displayWinnerScreen('Player');
+                displayNode(restart);
+
+            }
+        })
+        hideNode(play);
+        hideNode(randomise);
+    })
+
 }
 
 const attackOpponentAtCell = (opponent, cell) => {
@@ -74,5 +103,26 @@ const markcellAsAttacked = (cell) => {
 
 const markCellAsHit = (cell) => {
     cell.classList.add('hit');
+}
+
+const displayWinnerScreen = (player) => {
+    const screenContainer = document.querySelector('.screen');
+    screenContainer.textContent = `${player} wins the game`;
+    displayNode(screenContainer);
+}
+
+function removeShipsOnGameboard(gameboard) {
+    const gameboardTds = gameboard.querySelectorAll('td');
+    gameboardTds.forEach((td) => {
+        td.classList.remove('ship');
+    })
+}
+
+function displayNode(node) {
+    node.style.visibility = 'visible';
+}
+
+function hideNode(node) {
+    node.style.visibility = 'hidden';
 }
 export default game;
