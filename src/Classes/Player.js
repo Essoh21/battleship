@@ -23,13 +23,14 @@ class Player {
         enemy.gameboard.receiveAttack(coordinates, enemy.ships);
     }
 
-    attackEnemyAtRandomCoords(enemy) {
+    attackEnemyAtRandomCoordsAndReturnAttackCoords(enemy) {
         const possibleAttacks =
             this.getpossibleAttackCoordsFrom(enemy.gameboard);
         const randomIndex =
             Math.floor(Math.random() * possibleAttacks.length);
         const attackCoords = possibleAttacks[randomIndex];
         this.attackEnemyAt(enemy, attackCoords);
+        return attackCoords;
 
     }
 
