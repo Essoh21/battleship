@@ -65,3 +65,4 @@ class Player {
 }
 
 export default Player;
+//write a js function that alternate computer and player lays in a battleShip game

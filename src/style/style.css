@@ -49,12 +49,22 @@ td {
     background-color: var(--body-background-color);
 }
 
-.opponent-part .clicked {
+.opponent-part .clicked,
+.user-part .clicked {
     background-color: var(--clicked-cell-background-color);
 }
 
 .opponent-part .hit {
     background-color: var(--hit-cell-background);
+}
+
+.user-part .ship {
+    border: 3px solid blue;
+}
+
+.user-part .hit {
+    background-color: var(--hit-cell-background);
+    border: 3px solid red;
 }
 
 .opponent-part .sunk {
@@ -68,10 +78,6 @@ td {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-}
-
-.user-part .ship {
-    border: 3px solid blue;
 }
 
 .screen {
