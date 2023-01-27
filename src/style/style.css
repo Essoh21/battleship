@@ -89,10 +89,13 @@ td {
     font-weight: 400;
     color: blue;
     visibility: hidden;
+    overflow: hidden;
+    scroll-behavior: auto;
 }
 
 .userboard-title {
     font-size: .9rem;
+    overflow: hidden;
 }
 
 .opponent-part .caption {
