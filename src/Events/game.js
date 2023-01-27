@@ -67,7 +67,7 @@ const game = () => {
 
                 displayPlayerSunkShips(player, playerGameboard);
                 if (player.gameboard.areAllShipsSunk()) {
-                    playerGameboard
+                    opponentGameboard
                         .replaceWith(opponentGameboard.cloneNode(true))
                     displayWinnerScreen('Computer');
                     displayNode(restart);
